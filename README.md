@@ -1,0 +1,1 @@
+Creating custom enumerable under the 'Enumerable' module
