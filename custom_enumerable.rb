@@ -1,6 +1,12 @@
 module Enumerable
   def my_each
-    yield self
+    return 'no block given' unless block_given?
+
+    i = 0
+    while i != self.length
+      yield self[i]
+      i += 1
+    end
     self
   end
 end
