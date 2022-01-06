@@ -22,6 +22,22 @@
 # p numbers.map { |item| item**2 }
 # p numbers.my_map { |item| item**2 }
 
+# p numbers.inject { |result, elm| result - elm }
+# p numbers.my_inject { |result, elm| result - elm }
+
+=begin
+collection = [ [1, 'one'], [2, 'two'], [3, 'three'],
+	 [4, 'four'], [5, 'five'] 
+	 ]
+	
+x=collection.my_inject({}) do |hash, value|
+  hash[value.first] = value.last 
+  hash
+end
+p x
+p ['cat',' ','dawg','  ' ,'op '].my_inject('jjk'){|acc,item| acc+item}
+=end
+
 module Enumerable
   def my_each
     return 'no block given' unless block_given?
@@ -105,8 +121,20 @@ module Enumerable
         accm = yield(accm, item)
       end
       return accm
-    else
+    elsif arg.is_a?(Integer)
       accm=arg.to_i
+      self.each do |item|
+        accm=yield(accm,item)
+      end
+      return accm
+    elsif arg.is_a?(Hash)
+      accm=arg.to_h
+      self.each do |item|
+        accm=yield(accm,item)
+      end
+      return accm
+    elsif arg.is_a?(String)
+      accm=arg.to_s
       self.each do |item|
         accm=yield(accm,item)
       end
@@ -117,5 +145,5 @@ end
 
 numbers = [1, 2, 3, 4, 5]
 
-# p numbers.inject { |result, elm| result - elm }
-# p numbers.my_inject { |result, elm| result - elm }
+
+
