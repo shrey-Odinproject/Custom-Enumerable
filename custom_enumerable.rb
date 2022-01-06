@@ -27,7 +27,7 @@ module Enumerable
     formatted = []
     self.my_each do |item|
       y_i = yield item
-      formatted.push(item) if y_i != false && y_i!=nil # nil case is for when u use puts
+      formatted.push(item) if y_i != false && y_i!=nil # nil case is for when u use puts nil&false are non truthy
     end
     formatted
   end
@@ -36,7 +36,14 @@ module Enumerable
     filtered=self.my_select do |item|
       yield item
     end
-    filtered.length==length
+    filtered.length==length # all items passed test and were selected
+  end
+
+  def my_any?
+    filtered=self.my_select do |item|
+      yield item
+    end
+    filtered.length>0 # any 1 or more items were selected
   end
 end
 
@@ -51,5 +58,8 @@ numbers = [1, 2, 3, 4, 5]
 # p numbers.select { |item|  puts item.even? }
 # p numbers.my_select { |item| puts item.even? }
 
-p numbers.all? { |item| item > 0 }
-p numbers.my_all? { |item| item > 0 }
+# numbers.all? { |item| item > 0 }
+# numbers.my_all? { |item| item > 0 }
+
+# p numbers.any? {|item| item >9}
+# p numbers.my_any? {|item| item >9}
