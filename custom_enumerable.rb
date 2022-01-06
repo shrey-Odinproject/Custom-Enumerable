@@ -145,5 +145,8 @@ end
 
 numbers = [1, 2, 3, 4, 5]
 
+def multiply_els(arr)
+  arr.my_inject {|result, item| result*item}
+end
 
-
+p multiply_els([2,4,5])
