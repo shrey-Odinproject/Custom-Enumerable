@@ -36,6 +36,7 @@ module Enumerable
     filtered=self.my_select do |item|
       yield item
     end
+    filtered.length==length
   end
 end
 
@@ -50,5 +51,5 @@ numbers = [1, 2, 3, 4, 5]
 # p numbers.select { |item|  puts item.even? }
 # p numbers.my_select { |item| puts item.even? }
 
-p numbers.all? { |item| puts item if item > 2 }
-p numbers.my_all? { |item| puts item if item > 2 }
+p numbers.all? { |item| item > 0 }
+p numbers.my_all? { |item| item > 0 }
