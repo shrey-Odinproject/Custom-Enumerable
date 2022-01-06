@@ -106,10 +106,10 @@ module Enumerable
     counter
   end
 
-  def my_map
+  def my_map(proc)
     formatted = []
     self.my_each do |item|
-      formatted.push(yield(item))
+      formatted.push(proc.call(item))
     end
     formatted
   end
@@ -149,4 +149,9 @@ def multiply_els(arr)
   arr.my_inject {|result, item| result*item}
 end
 
-p multiply_els([2,4,5])
+# p multiply_els([2,4,5])
+
+t= Proc.new {|item| item+100}
+r= ->(x) {x*2}
+p numbers.my_map(t)
+p numbers.my_map(r)
