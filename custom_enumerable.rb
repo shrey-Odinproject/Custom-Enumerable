@@ -45,6 +45,13 @@ module Enumerable
     end
     filtered.length>0 # any 1 or more items were selected
   end
+
+  def my_none?
+    filtered=self.my_select do |item|
+      yield item
+    end
+    filtered.length==0
+  end
 end
 
 numbers = [1, 2, 3, 4, 5]
@@ -63,3 +70,6 @@ numbers = [1, 2, 3, 4, 5]
 
 # p numbers.any? {|item| item >9}
 # p numbers.my_any? {|item| item >9}
+
+# p numbers.none? { |item| item > 110 }
+# p numbers.my_none? { |item| item > 110 }
