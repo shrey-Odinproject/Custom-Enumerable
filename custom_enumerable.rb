@@ -25,10 +25,8 @@ module Enumerable
     return 'no block given' unless block_given?
 
     formatted = []
-    i = 0
-    while i != self.length
-      formatted.push(yield self[i])
-      i += 1
+    self.my_each do |item|
+      formatted.push(yield item)
     end
     formatted - [nil]
   end
