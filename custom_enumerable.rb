@@ -19,6 +19,9 @@
 # p numbers.count(0)
 # p numbers.my_count(0)
 
+# p numbers.map { |item| item**2 }
+# p numbers.my_map { |item| item**2 }
+
 module Enumerable
   def my_each
     return 'no block given' unless block_given?
@@ -95,17 +98,24 @@ module Enumerable
     formatted
   end
 
-  def my_inject(accm = 0)
-    self.my_each do |item|
-      yield(accm, item)
+  def my_inject(arg = nil)
+    if arg==nil
+      accm=self[0]
+      self[1..].each do |item|
+        accm = yield(accm, item)
+      end
+      return accm
+    else
+      accm=arg.to_i
+      self.each do |item|
+        accm=yield(accm,item)
+      end
+      return accm
     end
   end
 end
 
 numbers = [1, 2, 3, 4, 5]
 
-p numbers.map { |item| item**2 }
-p numbers.my_map { |item| item**2 }
-
-# p numbers.inject {|result, elm| result - elm }
+# p numbers.inject { |result, elm| result - elm }
 # p numbers.my_inject { |result, elm| result - elm }
