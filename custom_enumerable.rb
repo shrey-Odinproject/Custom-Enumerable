@@ -106,10 +106,16 @@ module Enumerable
     counter
   end
 
-  def my_map(proc)
+  def my_map(proc=nil)
     formatted = []
-    self.my_each do |item|
-      formatted.push(proc.call(item))
+    if proc!=nil
+      self.my_each do |item|
+        formatted.push(proc.call(item))
+      end
+    else
+      self.my_each do |item|
+        formatted.push(yield(item))
+      end
     end
     formatted
   end
@@ -153,5 +159,5 @@ end
 
 t= Proc.new {|item| item+100}
 r= ->(x) {x*2}
-p numbers.my_map(t)
-p numbers.my_map(r)
+p numbers.my_map(t) {|x| x-1000}
+p numbers.my_map{|x| x-1000}
