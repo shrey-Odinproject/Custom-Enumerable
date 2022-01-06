@@ -27,30 +27,43 @@ module Enumerable
     formatted = []
     self.my_each do |item|
       y_i = yield item
-      formatted.push(item) if y_i != false && y_i!=nil # nil case is for when u use puts nil&false are non truthy
+      formatted.push(item) if y_i != false && y_i != nil # nil case is for when u use puts nil&false are non truthy
     end
     formatted
   end
 
   def my_all?
-    filtered=self.my_select do |item|
+    filtered = self.my_select do |item|
       yield item
     end
-    filtered.length==length # all items passed test and were selected
+    filtered.length == length # all items passed test and were selected
   end
 
   def my_any?
-    filtered=self.my_select do |item|
+    filtered = self.my_select do |item|
       yield item
     end
-    filtered.length>0 # any 1 or more items were selected
+    filtered.length > 0 # any 1 or more items were selected
   end
 
   def my_none?
-    filtered=self.my_select do |item|
+    filtered = self.my_select do |item|
       yield item
     end
-    filtered.length==0
+    filtered.length == 0
+  end
+
+  def my_count(elm = nil)
+    counter = 0
+    self.my_each do |item|
+      yield item if block_given? # do we even need this?
+      if elm == nil
+        counter += 1
+      else
+        counter += 1 if item == elm
+      end
+    end
+    counter
   end
 end
 
@@ -73,3 +86,6 @@ numbers = [1, 2, 3, 4, 5]
 
 # p numbers.none? { |item| item > 110 }
 # p numbers.my_none? { |item| item > 110 }
+
+p numbers.count(0)
+p numbers.my_count(0)
