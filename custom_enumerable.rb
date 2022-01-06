@@ -26,9 +26,16 @@ module Enumerable
 
     formatted = []
     self.my_each do |item|
-      formatted.push(yield item)
+      y_i = yield item
+      formatted.push(item) if y_i != false && y_i!=nil # nil case is for when u use puts
     end
-    formatted - [nil]
+    formatted
+  end
+
+  def my_all?
+    filtered=self.my_select do |item|
+      yield item
+    end
   end
 end
 
@@ -40,5 +47,8 @@ numbers = [1, 2, 3, 4, 5]
 # numbers.each_with_index {|item, idx| puts "#{idx} #{item}"}
 # numbers.my_each_with_index {|item, idx| puts "#{idx} -> #{item}"}
 
-numbers.select { |item| puts item if item > 2 }
-numbers.my_select { |item| puts item if item > 2 }
+# p numbers.select { |item|  puts item.even? }
+# p numbers.my_select { |item| puts item.even? }
+
+p numbers.all? { |item| puts item if item > 2 }
+p numbers.my_all? { |item| puts item if item > 2 }
